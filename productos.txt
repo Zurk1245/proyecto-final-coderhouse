@@ -1,0 +1,22 @@
+[
+	{
+		"id": 1,
+		"timestamp": "2022",
+		"nombre": "manzana",
+		"descripcion": "fruta roja",
+		"codigo": "1",
+		"foto": "https://cdn3.iconfinder.com/data/icons/back-to-school-6/128/APPLE.png",
+		"precio": 10,
+		"stock": 4
+	},
+	{
+		"timestamp": "2022",
+		"nombre": "Naranja",
+		"descripcion": "Bola Naranja",
+		"codigo": "naranjoso",
+		"foto": "",
+		"precio": 10,
+		"stock": 3,
+		"id": 2
+	}
+]
