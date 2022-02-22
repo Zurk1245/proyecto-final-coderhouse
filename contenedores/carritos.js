@@ -61,17 +61,18 @@ class ContenedorCarritos {
             const carritos = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedCarritos = JSON.parse(carritos);
             const carrito = parsedCarritos.find(carrito => carrito.id == carritoId);
-            const productos = await fs.promises.readFile("./productos.txt", 'utf-8');
+            const productos = await fs.promises.readFile("./contenedores/productos.txt", 'utf-8');
             const parsedProductos = JSON.parse(productos);
             const productoParaAgregar = parsedProductos.find(producto => producto.id == productoId);
             if (productoParaAgregar) {
                 if (productoParaAgregar.stock >= 1) {
                     productoParaAgregar.stock--;
+                    const stringifiedProductos = JSON.stringify(parsedProductos, null, "\t");
+                    await fs.promises.writeFile("./contenedores/productos.txt", stringifiedProductos);
                     carrito.productos.push(productoParaAgregar);
                     const stringifiedCarritos = JSON.stringify(parsedCarritos, null, "\t");
                     await fs.promises.writeFile(this.archivo, stringifiedCarritos);
-                    const stringifiedProductos = JSON.stringify(parsedProductos, null, "\t");
-                    await fs.promises.writeFile("./productos.txt", stringifiedProductos);
+                    
                     return `Producto con id ${productoId} agregado al carrito con id ${carritoId}`;
                 } else {
                     return `Producto con id ${productoId} agotado`;

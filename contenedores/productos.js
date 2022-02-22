@@ -42,18 +42,13 @@ class ProductManagement {
         }
     }
 
-    async updateById(newTimestamp, newNombre, newDescripcion, newCodigo, newFoto, newPrecio, newStock, id) {
+    async updateById(updatedProduct, id) {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            const productToUpdate = parsedData.find(obj => obj.id == id);
-            productToUpdate.timestamp = newTimestamp;
-            productToUpdate.nombre = newNombre;
-            productToUpdate.descripcion = newDescripcion;
-            productToUpdate.codigo = newCodigo;
-            productToUpdate.foto = newFoto;
-            productToUpdate.precio = newPrecio;
-            productToUpdate.stock = newStock;    
+            let productToUpdate = parsedData.find(obj => obj.id == id);
+            let productIndex = parsedData.findIndex(obj => obj.id == id);
+            parsedData[productIndex] = { ...productToUpdate, ...updatedProduct };
             const stringifiedData = JSON.stringify(parsedData, null, '\t');
             await fs.promises.writeFile(this.archivo, stringifiedData);
         } catch (error) {
