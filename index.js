@@ -37,35 +37,6 @@ productos.get("/:id?", async (req, res) => {
         res.send(products);
     }
 });
-    
-productos.put("/:id", async (req, res) => {
-    //Actualiza un producto por su id (disponible para administradores)
-    if (administrador) {
-        const updatedProduct = req.body;        
-        await productManagement.updateById(updatedProduct, req.params.id);
-        res.send(`Producto ${req.params.id} actualizado`);
-    } else {
-        const pathError = {
-            error: -1,
-            descripcion: `Ruta ${req.url} método ${req.method} no autorizada`
-        }
-        res.send(pathError);
-    }
-});
-
-productos.delete("/:id", async (req, res) => { 
-    //Borra un producto por su id (disponible para administradores)
-    if (administrador) {
-        await productManagement.deleteById(req.params.id);
-        res.send(`Producto ${req.params.id} eliminado`);
-    } else {
-        const pathError = {
-            error: -1,
-            descripcion: `Ruta ${req.url} método ${req.method} no autorizada`
-        }
-        res.send(pathError);
-    }
-});
 
 productos.post("/", async (req, res) => {
     //Para incorporar productos al listado (disponible para administradores)
@@ -79,8 +50,13 @@ productos.post("/", async (req, res) => {
             precio: req.body.precio,
             stock: req.body.stock
         }
-        await productManagement.save(newProduct);
-        res.send("Producto agregado!");
+        let { nombre, descripcion, codigo, foto, precio, stock } = req.body;
+        if ( !nombre || !descripcion || !codigo || !foto || !precio || !stock ) {
+            res.send("Propiedad/es faltante/s en el producto a agregar");
+        } else {
+            const result = await productManagement.save(newProduct);
+            res.send(result);
+        }
     } else {
         const pathError = {
             error: -1,
@@ -89,6 +65,37 @@ productos.post("/", async (req, res) => {
         res.send(pathError);
     }
 });
+    
+productos.put("/:id", async (req, res) => {
+    //Actualiza un producto por su id (disponible para administradores)
+    if (administrador) {
+        const updatedProduct = req.body;        
+        const result = await productManagement.updateById(updatedProduct, req.params.id);
+        res.send(result);
+    } else {
+        const pathError = {
+            error: -1,
+            descripcion: `Ruta ${req.url} método ${req.method} no autorizada`
+        }
+        res.send(pathError);
+    }
+});
+
+productos.delete("/:id", async (req, res) => { 
+    //Borra un producto por su id (disponible para administradores)
+    if (administrador) {
+        const result = await productManagement.deleteById(req.params.id);
+        //res.send(`Producto ${req.params.id} eliminado`);
+        res.send(result);
+    } else {
+        const pathError = {
+            error: -1,
+            descripcion: `Ruta ${req.url} método ${req.method} no autorizada`
+        }
+        res.send(pathError);
+    }
+});
+
 
 
 
@@ -111,15 +118,19 @@ carrito.get("/:id/productos", async (req, res) => {
     res.send(carrito);
 });
 
-carrito.post("/:id/productos/:id_prod", async (req, res) => {
-    //Para incorporar productos al carrito por su id de producto
-    const result = await contenedorDeCarritos.addProductToCarritoById(req.params.id, req.params.id_prod);
+carrito.post("/:id/productos", async (req, res) => {
+    //Para incorporar productos al carrito por su id de producto en el body
+    const idCarrito = req.params.id;
+    const idProducto = parseInt(req.body.id);
+    const result = await contenedorDeCarritos.addProductToCarritoById(idCarrito, idProducto);
     res.send(result);
 });
 
 carrito.delete("/:id/productos/:id_prod", async (req, res) => {
     // Eliminar un producto del carrito por su id de carrito y de producto
-    const result = await contenedorDeCarritos.deleteProductFromCarritoByIds(req.params.id, req.params.id_prod);
+    const idCarrito = req.params.id;
+    const idProducto = req.params.id_prod;
+    const result = await contenedorDeCarritos.deleteProductFromCarritoByIds(idCarrito,idProducto);
     res.send(result);
 });
 

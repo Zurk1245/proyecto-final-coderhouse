@@ -13,7 +13,7 @@ class ProductManagement {
             parsedData.push(product);
             const stringifiedData = JSON.stringify(parsedData, null, '\t');
             await fs.promises.writeFile(this.archivo, stringifiedData);
-            return product.id;
+            return `Producto agregado con id ${product.id}`;
         } catch (error) {
             console.log(error);
         }
@@ -24,8 +24,7 @@ class ProductManagement {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            console.log(parsedData ? parsedData : null);
-            return parsedData ? parsedData : null; 
+            return parsedData.length ? parsedData : `No hay productos agregados`; 
         } catch (error) {
             console.log(error);
         }
@@ -36,7 +35,8 @@ class ProductManagement {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
             const desiredElement = parsedData.find(elem => elem.id == id);
-            return desiredElement ? desiredElement : null; 
+
+            return desiredElement ? desiredElement : `Producto con id ${id} no encontrado`; 
         } catch (error) {
             console.log(error);
         }
@@ -48,28 +48,36 @@ class ProductManagement {
             const parsedData = JSON.parse(data);
             let productToUpdate = parsedData.find(obj => obj.id == id);
             let productIndex = parsedData.findIndex(obj => obj.id == id);
-            parsedData[productIndex] = { ...productToUpdate, ...updatedProduct };
-            const stringifiedData = JSON.stringify(parsedData, null, '\t');
-            await fs.promises.writeFile(this.archivo, stringifiedData);
+            if (productIndex == -1) {
+                return `Producto con id ${id} no encontrado`;
+            } else {
+                parsedData[productIndex] = { ...productToUpdate, ...updatedProduct };
+                const stringifiedData = JSON.stringify(parsedData, null, '\t');
+                await fs.promises.writeFile(this.archivo, stringifiedData);
+                return `Producto con id ${id} actualizado`;
+            }
+            
         } catch (error) {
             console.log(error);
         }
         
     }
 
-    async deleteById(Number) {
+    async deleteById(id) {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            const desiredObjectPositionToDelete = parsedData.findIndex(object => object.id == Number);
+            const desiredObjectPositionToDelete = parsedData.findIndex(object => object.id == id);
+
             if (desiredObjectPositionToDelete === -1) {
-                console.log('Id not found');
-                return;
-            } else {
-                parsedData.splice(desiredObjectPositionToDelete, 1);
-                const stringifiedData = JSON.stringify(parsedData, null, "\t");
-                await fs.promises.writeFile(this.archivo, stringifiedData);
-            }
+                return `Producto a eliminar con id ${id} no encontrado`;
+            } 
+
+            parsedData.splice(desiredObjectPositionToDelete, 1);
+            const stringifiedData = JSON.stringify(parsedData, null, "\t");
+            await fs.promises.writeFile(this.archivo, stringifiedData);
+
+            return `Producto con id ${id} eliminado`;
         } catch (error) {
                 console.log(error);
             }
