@@ -50,7 +50,9 @@ productos.post("/", async (req, res) => {
             precio: req.body.precio,
             stock: req.body.stock
         }
+        
         let { nombre, descripcion, codigo, foto, precio, stock } = req.body;
+
         if ( !nombre || !descripcion || !codigo || !foto || !precio || !stock ) {
             res.send("Propiedad/es faltante/s en el producto a agregar");
         } else {

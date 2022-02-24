@@ -61,6 +61,9 @@ class ContenedorCarritos {
             const carritos = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedCarritos = JSON.parse(carritos);
             const carrito = parsedCarritos.find(carrito => carrito.id == carritoId);
+    
+            if (!carrito) return `Carrito con id ${carritoId} no encontrado`;
+
             const productos = await fs.promises.readFile("./contenedores/productos.txt", 'utf-8');
             const parsedProductos = JSON.parse(productos);
             const productoParaAgregar = parsedProductos.find(producto => producto.id == productoId);
