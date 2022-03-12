@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/Zurk1245/proyecto-final-coderhouse#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongoose": "^6.2.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
