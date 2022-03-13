@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const productoSchema = new Schema({
+    id: Number,
     timestamp: {
         type: String,
         required: true
@@ -33,6 +34,6 @@ const productoSchema = new Schema({
     }
 });
 
-const productModel = model('Productos', productoSchema);
+const ProductoModel = model('Producto', productoSchema);
 
-module.exports = productModel;
+module.exports = ProductoModel;

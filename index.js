@@ -1,7 +1,7 @@
 const express = require("express");
-const Carrito = require("./unidades/carrito");
-const ContenedorCarritos = require("./contenedores/carritos");
-const ProductManagement = require("./contenedores/productos");
+const Carrito = require("./src/unidades/carrito");
+const ContenedorCarritos = require("./src/contenedores/carritos");
+const ProductManagement = require("./src/contenedores/productos");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
