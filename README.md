@@ -1,6 +1,18 @@
-# Proyecto-Final-Coderhouse
+# Proyecto-Final-Coderhouse : segunda entrega
 
 Glitch: https://luxuriant-dull-couch.glitch.me/api/productos/
+
+## Implementado
+1. DAOs del contenedor "archivo"
+2. DAO productos para mongodb
+3. Archivo config para las distintas bases de datos
+4. Archivo para dotenv para las variables de entorno
+5. Imports dinámicos (faltan los require de las funcionalidades no implementadas)
+
+## Falta implementar
+1. Funcionalidad de firebase
+2. DAO de carrito para mongodb
+
 
 ## Como inicializar el proyecto
 
