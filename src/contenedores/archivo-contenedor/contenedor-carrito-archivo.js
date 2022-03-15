@@ -1,14 +1,16 @@
 const fs = require("fs");
+const Carrito = require("../../unidades/carrito");
 
 class ContenedorCarritos {
     constructor(archivo) {
         this.archivo = archivo;
     }
 
-    async save(carrito) {
+    async save() {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
+            const carrito = new Carrito();
             carrito.id = parsedData.length == 0 ? 1 : parseInt(parsedData[parsedData.length - 1].id) + 1;
             parsedData.push(carrito);
             const stringifiedData = JSON.stringify(parsedData, null, '\t');
@@ -141,4 +143,5 @@ class ContenedorCarritos {
         }
     }
 }
+
 module.exports = ContenedorCarritos;

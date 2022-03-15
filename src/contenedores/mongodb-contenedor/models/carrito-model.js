@@ -6,9 +6,9 @@ const carritoSchema = new Schema({
         type: String,
         required: true
     },
-    productos: {
-        type: [ProductoModel]
-    }
+    // productos: {
+    //     type: [ProductoModel]
+    // }
 
 });
 

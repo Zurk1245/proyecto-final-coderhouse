@@ -1,9 +1,8 @@
 const express = require("express");
-const ProductManagement = require("../contenedores/productos.js");
-const productosDao = process.env.DB == "mongodb" ? require("../daos/productos/productos-dao-mongodb.js") : "asd"
+const productosDao = process.env.DB == "mongodb" ? require("../daos/productos/ productos-dao-mongodb.js") :
+                                        "arhivo" ? require("../daos/productos/productos-dao-archivo") : "";
 
 const productos = express.Router();
-const productManagement = new ProductManagement(`c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/contenedores/productos.txt`);
 
 let administrador = true;
 

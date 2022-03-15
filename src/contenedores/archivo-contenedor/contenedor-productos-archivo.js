@@ -19,7 +19,6 @@ class ProductManagement {
         }
     }
 
-
     async getAll() {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');

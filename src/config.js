@@ -6,5 +6,9 @@ module.exports = {
     }, 
     firebase: {
 
+    },
+    archivo: {
+        productosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/contenedores/archivo-contenedor/productos.txt",
+        carritosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/contenedores/archivo-contenedor/carritos.txt"
     }
 }
