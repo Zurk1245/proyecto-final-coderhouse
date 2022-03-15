@@ -1,1 +1,42 @@
-[]
+[
+	{
+		"timestamp": "15/3/2022 11:53:48",
+		"nombre": "Manzana",
+		"descripcion": "fruta roja",
+		"codigo": "1",
+		"foto": "https://cdn3.iconfinder.com/data/icons/back-to-school-6/128/APPLE.png",
+		"precio": 10,
+		"stock": 10,
+		"id": 1
+	},
+	{
+		"timestamp": "15/3/2022 11:55:32",
+		"nombre": "Manzana",
+		"descripcion": "fruta roja",
+		"codigo": "1",
+		"foto": "https://cdn3.iconfinder.com/data/icons/back-to-school-6/128/APPLE.png",
+		"precio": 10,
+		"stock": 10,
+		"id": 2
+	},
+	{
+		"timestamp": "15/3/2022 12:00:47",
+		"nombre": "Manzana",
+		"descripcion": "fruta roja",
+		"codigo": "1",
+		"foto": "https://cdn3.iconfinder.com/data/icons/back-to-school-6/128/APPLE.png",
+		"precio": 10,
+		"stock": 10,
+		"id": 3
+	},
+	{
+		"timestamp": "15/3/2022 12:02:13",
+		"nombre": "Manzana",
+		"descripcion": "fruta roja",
+		"codigo": "1",
+		"foto": "https://cdn3.iconfinder.com/data/icons/back-to-school-6/128/APPLE.png",
+		"precio": 10,
+		"stock": 10,
+		"id": 4
+	}
+]

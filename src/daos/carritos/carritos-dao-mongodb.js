@@ -1,5 +1,11 @@
 const CarritoModel = require("../../contenedores/mongodb-contenedor/models/carrito-model");
-const { mongodbCreate, mongodbRead, mongodbUpdate, mongodbDelete } = require("../../contenedores/mongodb-contenedor/mongoCRUD");
+const ContenedorMongoDB = require("../../contenedores/mongodb-contenedor/contenedor-mongodb");
+const config = require("../../config");
+
+const carritosDaoMongodb = new ContenedorMongoDB(config.mongodbRemote, CarritoModel, "Carrito");
+
+module.exports = carritosDaoMongodb;
+
 
 class MongoDBCarritosDAO {
 
@@ -22,14 +28,22 @@ class MongoDBCarritosDAO {
         mongodbRead(CarritoModel, { id: carritoId });
     }
 
-    updateProduct(id, updatedProduct) {
-        mongodbUpdate(CarritoModel, id, updatedProduct);
+    addProductToCarritoById(idCarrito, idProducto) {
+        const productos = mongodbRead({id: idCarrito}, {productos: 1});
+        const prodcutoParaAgregar =  mongodbRead({id: idProducto});
+        console.log(productos);
+        console.log(prodcutoParaAgregar);
+        productos.push(prodcutoParaAgregar);
+        mongodbUpdate({id: idCarrito}, {productos: productos});
     }
 
     deleteCarrito(id) {
         mongodbDelete(CarritoModel, id);
     }
 
-}
+    deleteProductFromCarritoByIds(idCarrito, idProducto) {
+        const productosDelCarrito = mongodbRead( {id: idCarrito}, {productos: 1});
+        mongodbDelete();
+    }
 
-module.exports = MongoDBCarritosDAO;
+}

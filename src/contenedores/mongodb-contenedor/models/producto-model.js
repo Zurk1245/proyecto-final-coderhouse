@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const productoSchema = new Schema({
-    id: Number,
+    // id: Number,
     timestamp: {
         type: String,
         required: true
