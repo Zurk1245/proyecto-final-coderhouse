@@ -1,4 +1,5 @@
 const fs = require("fs");
+//const carrito = require("../../routes/carritos");
 const Carrito = require("../../unidades/carrito");
 
 class ContenedorCarritos {
@@ -12,10 +13,11 @@ class ContenedorCarritos {
             const parsedData = JSON.parse(data);
             const carrito = new Carrito();
             carrito.id = parsedData.length == 0 ? 1 : parseInt(parsedData[parsedData.length - 1].id) + 1;
+            console.log(carrito);
             parsedData.push(carrito);
             const stringifiedData = JSON.stringify(parsedData, null, '\t');
             await fs.promises.writeFile(this.archivo, stringifiedData);
-            return carrito.id;
+            return `Carrito creado con el id ${carrito.id}`;
         } catch (error) {
             console.log(error);
         }
@@ -44,17 +46,15 @@ class ContenedorCarritos {
         }
     }
 
-    async getProductsByCarritoId(id) {
-        console.log(id);
+    async getProductsByCarritoId(carritoId) {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            const containerPosition = parsedData.findIndex(cont => cont.id = id);
-            console.log(parsedData[containerPosition]);
-            const desiredProducts = parsedData[containerPosition].productos;
-            return desiredProducts ? desiredProducts : null; 
+            const carritoPosition = parsedData.findIndex(carrito => carrito.id == carritoId);
+            const desiredProducts = parsedData[carritoPosition].productos;
+            return desiredProducts.length ? desiredProducts : `El carrito con id ${carritoId} no tiene productos agregados`; 
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -66,7 +66,7 @@ class ContenedorCarritos {
     
             if (!carrito) return `Carrito con id ${carritoId} no encontrado`;
 
-            const productos = await fs.promises.readFile("./contenedores/productos.txt", 'utf-8');
+            const productos = await fs.promises.readFile("C:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/productos.txt", 'utf-8');
             const parsedProductos = JSON.parse(productos);
             const productoParaAgregar = parsedProductos.find(producto => producto.id == productoId);
 
@@ -74,7 +74,7 @@ class ContenedorCarritos {
                 if (productoParaAgregar.stock >= 1) {
                     productoParaAgregar.stock--;
                     const stringifiedProductos = JSON.stringify(parsedProductos, null, "\t");
-                    await fs.promises.writeFile("./contenedores/productos.txt", stringifiedProductos);
+                    await fs.promises.writeFile("C:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/productos.txt", stringifiedProductos);
                     carrito.productos.push(productoParaAgregar);
                     const stringifiedCarritos = JSON.stringify(parsedCarritos, null, "\t");
                     await fs.promises.writeFile(this.archivo, stringifiedCarritos);
@@ -115,18 +115,18 @@ class ContenedorCarritos {
         }
     }
 
-    async deleteById(Number) {
+    async deleteById(carritoId) {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            const desiredObjectPositionToDelete = parsedData.findIndex(object => object.id == Number);
+            const desiredObjectPositionToDelete = parsedData.findIndex(object => object.id == carritoId);
             if (desiredObjectPositionToDelete === -1) {
-                console.log('Id not found');
-                return;
+                return `Carrito con id ${carritoId} no encontrado`;
             } else {
                 parsedData.splice(desiredObjectPositionToDelete, 1);
                 const stringifiedData = JSON.stringify(parsedData, null, "\t");
                 await fs.promises.writeFile(this.archivo, stringifiedData);
+                return `Carrito ${carritoId} eliminado`;
             }
         } catch (error) {
                 console.log(error);

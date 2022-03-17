@@ -1,5 +1,6 @@
-class FirebaseProductosDAO {
-    agregar
-}
+const ProductManagement = require("../../contenedores/archivo-contenedor/contenedor-productos-archivo");
+const config = require("../../config");
 
-module.exports = FirebaseProductos;
+const productosDaoFirebase = new ProductManagement(config.firebase);
+
+module.exports = productosDaoFirebase;

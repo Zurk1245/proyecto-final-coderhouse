@@ -20,7 +20,7 @@ app.get('*', (req, res) => {
 });
 
 const server = app.listen(PORT, () => {
-    console.log("Sever running at port", PORT);
+    console.log("Sever running at port", PORT, `using the ${process.env.DB} database`);
 });
 
 server.on("error", error => console.log(error));

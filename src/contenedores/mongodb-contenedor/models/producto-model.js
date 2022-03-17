@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const productoSchema = new Schema({
-    // id: Number,
     timestamp: {
         type: String,
         required: true
@@ -12,7 +11,7 @@ const productoSchema = new Schema({
     },
     descripcion: {
         type: String,
-        required: true
+        //required: true
     },
     codigo: {
         type: String,
@@ -20,7 +19,7 @@ const productoSchema = new Schema({
     },
     foto: {
         type: String,
-        required: true
+        //required: true
     },
     precio: {
         type: Number,

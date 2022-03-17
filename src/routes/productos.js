@@ -1,6 +1,7 @@
 const express = require("express");
-const productosDao = process.env.DB == "mongodb" ? require("../daos/productos/ productos-dao-mongodb.js") :
+const productosDao = process.env.DB == "mongodb" ? require("../daos/productos/productos-dao-mongodb.js") :
                                         "arhivo" ? require("../daos/productos/productos-dao-archivo") : "";
+                                    
 
 const productos = express.Router();
 
@@ -13,6 +14,7 @@ productos.get("/:id?", async (req, res) => {
         res.send(producto);
     } else {
         const productos = await productosDao.getAll();
+        console.log(process.env.DB)
         res.send(productos);
     }
 });
@@ -22,20 +24,19 @@ productos.post("/", async (req, res) => {
     if (administrador) {
 
         let { nombre, descripcion, codigo, foto, precio, stock } = req.body;
-
-        const newProduct = {
-            timestamp: new Date().toLocaleString(),
-            nombre: nombre,
-            descripcion: descripcion,
-            codigo: codigo,
-            foto: foto,
-            precio: precio,
-            stock: stock
-        }
         
         if ( !nombre || !descripcion || !codigo || !foto || !precio || !stock ) {
             res.send("Propiedad/es faltante/s en el producto a agregar");
         } else {
+            const newProduct = {
+                timestamp: new Date().toLocaleString(),
+                nombre: nombre,
+                descripcion: descripcion,
+                codigo: codigo,
+                foto: foto,
+                precio: precio,
+                stock: stock
+            }
             const result = await productosDao.save(newProduct);
             res.send(result);
         }

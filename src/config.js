@@ -8,7 +8,7 @@ module.exports = {
 
     },
     archivo: {
-        productosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/contenedores/archivo-contenedor/productos.txt",
-        carritosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/contenedores/archivo-contenedor/carritos.txt"
+        productosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/productos.txt",
+        carritosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/carritos.txt"
     }
 }
