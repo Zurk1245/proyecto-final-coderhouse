@@ -7,7 +7,7 @@ Glitch: https://luxuriant-dull-couch.glitch.me/api/productos/
 2. DAOs del contenedor mongodb
 3. Archivo config para las distintas bases de datos
 4. Archivo para dotenv para las variables de entorno
-5. Imports dinámicos (faltan los require de firebase)
+5. Imports dinámicos usando require con condicional (faltan los require de firebase). La base de datos se cambia en el arhivo ".env"
 6. Reestructuración de carpetas del proyecto para que esté modularizado
 
 ## Falta implementar
