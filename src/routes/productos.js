@@ -7,17 +7,6 @@ const productos = express.Router();
 
 let administrador = true;
 
-productos.get("/:id?", async (req, res) => {
-    //Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
-    if (req.params.id) {
-        const producto = await productosDao.getById(req.params.id);
-        res.send(producto);
-    } else {
-        const productos = await productosDao.getAll();
-        res.send(productos);
-    }
-});
-
 productos.post("/", async (req, res) => {
     //Para incorporar productos al listado (disponible para administradores)
     if (administrador) {
@@ -44,6 +33,17 @@ productos.post("/", async (req, res) => {
             descripcion: `Ruta ${req.url} método ${req.method} no autorizada`
         }
         res.send(pathError);
+    }
+});
+
+productos.get("/:id?", async (req, res) => {
+    //Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
+    if (req.params.id) {
+        const producto = await productosDao.getById(req.params.id);
+        res.send(producto);
+    } else {
+        const productos = await productosDao.getAll();
+        res.send(productos);
     }
 });
     
