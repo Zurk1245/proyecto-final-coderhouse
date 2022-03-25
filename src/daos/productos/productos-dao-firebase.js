@@ -1,6 +1,6 @@
-const ProductManagement = require("../../contenedores/archivo-contenedor/contenedor-productos-archivo");
-const config = require("../../config");
+const ContenedorFirebase = require("../../contenedores/firebase-contenedor/contenedor-firebase");
+//const config = require("../../config");
 
-const productosDaoFirebase = new ProductManagement(config.firebase);
+const productosDaoFirebase = new ContenedorFirebase("productos", "Producto");
 
 module.exports = productosDaoFirebase;

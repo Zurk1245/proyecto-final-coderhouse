@@ -1,7 +1,7 @@
 const express = require("express");
 const productosDao = process.env.DB == "mongodb" ? require("../daos/productos/productos-dao-mongodb.js") :
-                                        "arhivo" ? require("../daos/productos/productos-dao-archivo") : "";
-                                    
+                    process.env.DB ==  "archivo" ? require("../daos/productos/productos-dao-archivo") : 
+                                                    require("../daos/productos/productos-dao-firebase");
 
 const productos = express.Router();
 
@@ -14,7 +14,6 @@ productos.get("/:id?", async (req, res) => {
         res.send(producto);
     } else {
         const productos = await productosDao.getAll();
-        console.log(process.env.DB)
         res.send(productos);
     }
 });
@@ -22,7 +21,6 @@ productos.get("/:id?", async (req, res) => {
 productos.post("/", async (req, res) => {
     //Para incorporar productos al listado (disponible para administradores)
     if (administrador) {
-
         let { nombre, descripcion, codigo, foto, precio, stock } = req.body;
         
         if ( !nombre || !descripcion || !codigo || !foto || !precio || !stock ) {

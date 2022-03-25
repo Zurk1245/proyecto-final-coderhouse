@@ -1,7 +1,8 @@
 const express = require("express");
 const carritoDao = process.env.DB == "mongodb" ? require("../daos/carritos/carritos-dao-mongodb") : 
-                                    "archivo" ? require("../daos/carritos/carritos-dao-archivo") : "asd";
-
+                    process.env.DB == "archivo" ? require("../daos/carritos/carritos-dao-archivo") : 
+                                                    require("../daos/carritos/carritos-dao-firebase");
+                                                    
 const carrito = express.Router();
 
 // let administrador = true;    
@@ -26,16 +27,6 @@ carrito.delete("/:id", async (req, res) => {
     }
 });
 
-carrito.get("/:id/productos", async (req, res) => {
-    //Me permite listar todos los productos guardados en un carrito
-    try {
-        const productosCarrito = await carritoDao.getProductsByCarritoId(req.params.id);
-        res.send(productosCarrito);   
-    } catch (error) {
-        console.error(error);
-    }
-});
-
 carrito.post("/:id/productos", async (req, res) => {
     //Para incorporar productos al carrito por su id de producto en el body
     try {
@@ -43,6 +34,16 @@ carrito.post("/:id/productos", async (req, res) => {
         const idProducto = req.body.id;
         const result = await carritoDao.addProductToCarritoById(idCarrito, idProducto);
         res.send(result);   
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+carrito.get("/:id/productos", async (req, res) => {
+    //Me permite listar todos los productos guardados en un carrito
+    try {
+        const productosCarrito = await carritoDao.getProductsByCarritoId(req.params.id);
+        res.send(productosCarrito);   
     } catch (error) {
         console.error(error);
     }
