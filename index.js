@@ -4,12 +4,16 @@ require("dotenv").config();
 
 const productosRoute = require("./src/routes/productos");
 const carritoRoute = require("./src/routes/carritos");
+const registroRoute = require("./src/routes/registro");
+const loginRoute = require("./src/routes/login");
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use("/api/productos", productosRoute);
 app.use("/api/carrito", carritoRoute);
+app.use("/registro", registroRoute);
+app.use("/login", loginRoute);
 
 app.get('*', (req, res) => {
     const pathError = {
