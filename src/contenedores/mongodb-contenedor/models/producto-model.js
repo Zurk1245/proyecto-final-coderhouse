@@ -30,6 +30,11 @@ const productoSchema = new Schema({
         type: Number,
         required: true,
         default: 0
+    }, 
+    cantidad: {
+        type: Number,
+        required: false,
+        default: 1
     }
 });
 

@@ -1,3 +1,4 @@
+require("dotenv").config();
 module.exports = {
     PORT: process.env.PORT || 8080,
     mongodbRemote: {
@@ -18,5 +19,9 @@ module.exports = {
     archivo: {
         productosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/productos.txt",
         carritosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/carritos.txt"
+    },
+    CREDENCIALES_ADMINISTRADOR: {
+        mail: "mendez.mariano@outlook.com.ar",
+        telefono: "+5491163329554"
     }
 }

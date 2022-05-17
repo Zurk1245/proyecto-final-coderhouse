@@ -32,7 +32,8 @@ carrito.post("/:id/productos", async (req, res) => {
     try {
         const idCarrito = req.params.id;
         const idProducto = req.body.id;
-        const result = await carritoDao.addProductToCarritoById(idCarrito, idProducto);
+        const cantidadDeUnidades = req.body.cantidad;
+        const result = await carritoDao.addProductToCarritoById(idCarrito, idProducto, cantidadDeUnidades);
         res.send(result);   
     } catch (error) {
         console.error(error);

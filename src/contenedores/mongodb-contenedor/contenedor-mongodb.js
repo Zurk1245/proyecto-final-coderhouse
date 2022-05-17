@@ -25,14 +25,22 @@ class ContenedorMongoDB {
             }
 
             await elementoParaAgregar.save();
-            return `${this.elementType} agregado con el id ${elementoParaAgregar._id}`;
+            const responseObject = {
+                status: "creación exitosa",
+                elementType: this.elementType,
+                elementId: elementoParaAgregar._id
+            }
+            const response = JSON.stringify(responseObject);
+            console.log(response);
+            return response;
+            //return `${this.elementType} agregado con el id ${elementoParaAgregar._id}`;
         } catch (error) {
             console.error(`Error: ${error}`);
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async getAll() {
@@ -42,11 +50,11 @@ class ContenedorMongoDB {
             return resultado;
         } catch (error) {
             console.error(`Error: ${error}`);
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async getById(id) {
@@ -56,11 +64,11 @@ class ContenedorMongoDB {
             return resultado;
         } catch (error) {
             console.error(`Error: ${error}`);
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async updateById(updatedElement, id) {
@@ -71,19 +79,17 @@ class ContenedorMongoDB {
             return `${this.elementType} con id ${id} actualizado`;
         } catch (error) {
             console.error(`Error: ${error}`);
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async deleteById(id) {
         try {
             await mongoose.connect(this.config.cnxStr);
-            console.log("1");
             const result = await this.model.deleteOne({_id: id});
-            console.log("2");
             console.log(result);
             return `${this.elementType} con id ${id} eliminado`;
         } catch (error) {
@@ -91,29 +97,39 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `${this.elementType} con id ${id} no encontrado`;
             }
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
-    async addProductToCarritoById(idCarrito, idProducto) {
+    async addProductToCarritoById(idCarrito, idProducto, cantidadDeUnidades) {
         try {
             await mongoose.connect(this.config.cnxStr);
             const productoParaAgregar = await ProductoModel.findById(idProducto);
+            await ProductoModel.findOneAndUpdate( {_id: idProducto}, { cantidad: cantidadDeUnidades});
+            productoParaAgregar.cantidad = cantidadDeUnidades;
             await CarritoModel.updateOne({_id: idCarrito}, {$push: {productos: productoParaAgregar} });
-            return `Producto con id ${idProducto} agregado al carrito con id ${idCarrito}`;
+            const responseObject = {
+                status: "producto agregado con exito al carrito",
+                productoId: idProducto,
+                carritoId: idCarrito,
+                cantidad: cantidadDeUnidades
+            }
+            const response = JSON.stringify(responseObject);
+            await ProductoModel.findOneAndUpdate( {_id: idProducto}, { cantidad: 1});
+            return response;
         } catch (error) {
             console.error(`Error: ${error.message}`);
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `Carrito o producto no encontrado`;
             }
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async getProductsByCarritoId(carritoId) {
@@ -126,11 +142,11 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `Carrito con id ${carritoId} no encontrado`;
             }
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async deleteProductFromCarritoByIds(idCarrito, idProducto) {
@@ -147,11 +163,11 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `Carrito con id ${idCarrito} o producto con id ${idProducto} no encontrado`;
             }
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
     
 }

@@ -1,0 +1,55 @@
+<header>
+    <nav>
+        <a class="nav-button-home" href="#perfil">Perfil</a>
+        <a class="nav-button-home" href="#productos">Productos</a>
+        <a class="nav-button-home" href="#carrito">Mi carrito</a>
+        <form id="logout-form" action="/logout" method="post">
+            <button class="nav-button-home">Cerrar sesión</button>
+        </form>
+    </nav>
+</header>
+
+<section id="perfil">
+
+    <h1 class="title">Bienvenido, {{usuario.nombre}}. Este es su perfil:</h1>
+
+    <ul id="data-list">
+        <li>Email: {{usuario.email}}</li>
+        <li>Dirección: {{usuario.direccion}}</li>
+        <li>Edad: {{usuario.edad}}</li>
+        <li>Teléfono: {{usuario.telefono}}</li>
+        <li>Foto: <img src="{{usuario.foto}}" alt="Foto de perfil" class="foto-perfil"></li>
+    </ul>
+
+</section>
+
+<section id="productos">
+{{#if products.length}}
+<h3 class="title">PRODUCTOS</h3>
+<div>
+    <table border="2">
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Foto</th>
+            <th>Carrito</th>
+        </tr>
+        {{#each products}}
+        <tr>
+            <td>{{this.nombre}}</td>
+            <td>${{this.precio}}</td>
+            <td style="display: flex; justify-content: center;"><img width="50" src={{this.foto}} alt={{this.nombre}}></td>
+            <td><button class="btn-agregar-carrito" prod_id="{{this._id}}" prod_ref="{{this.nombre}}" prod_price="{{this.precio}}">+</button></td>
+        </tr>
+        {{/each}}
+    </table>
+</div>
+{{/if}}
+</section>
+
+<section id="carrito">
+    <h2 class="title">MI CARRITO</h2>
+    <p>Total: $<span id="precio-total">0.00</span></p>
+    <button id="btn-vaciar-carrito" class="btn-carrito">Vaciar</button>
+    <button id="btn-enviar-solicitud" class="btn-carrito">Enviar solicitud</button>
+</section>
