@@ -1,4 +1,5 @@
 const fs = require("fs");
+const logger = require("../../winston-logger");
 
 class ProductManagement {
     constructor(archivo) {
@@ -15,7 +16,7 @@ class ProductManagement {
             await fs.promises.writeFile(this.archivo, stringifiedData);
             return `Producto agregado con id ${product.id}`;
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -25,7 +26,7 @@ class ProductManagement {
             const parsedData = JSON.parse(data);
             return parsedData.length ? parsedData : `No hay productos agregados`; 
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -37,7 +38,7 @@ class ProductManagement {
 
             return desiredElement ? desiredElement : `Producto con id ${id} no encontrado`; 
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -57,7 +58,7 @@ class ProductManagement {
             }
             
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
         
     }
@@ -78,7 +79,7 @@ class ProductManagement {
 
             return `Producto con id ${id} eliminado`;
         } catch (error) {
-                console.log(error);
+                logger.error(error);
             }
     }
 
@@ -86,9 +87,9 @@ class ProductManagement {
         try {
             await fs.promises.writeFile(this.archivo, '[]');
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
-            console.log(data);
+            logger.info(data);
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 }

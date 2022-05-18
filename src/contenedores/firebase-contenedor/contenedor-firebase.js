@@ -1,6 +1,7 @@
 const { initializeApp } = require("firebase/app"); 
 const { getFirestore, getDoc, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, connectFirestoreEmulator } = require("firebase/firestore");
 const config = require("../../config");
+const logger = require("../../winston-logger");
 
 initializeApp(config.firebase);
 
@@ -30,7 +31,7 @@ class ContenedorFirebase {
                 return `Producto agregado con el id ${docRef.id}`;
             }
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         } 
     }
 
@@ -43,7 +44,7 @@ class ContenedorFirebase {
             });
             return productos;
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         } 
     }
 
@@ -56,7 +57,7 @@ class ContenedorFirebase {
             }            
             return docSnap.data();
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         } 
     }
 
@@ -69,7 +70,7 @@ class ContenedorFirebase {
             if (error.message.includes("NOT_FOUND")) {
                 return `Producto con id ${id} no encontrado`;
             }
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         } 
     }
 
@@ -83,7 +84,7 @@ class ContenedorFirebase {
             await deleteDoc(docRef);
             return `${this.element} con id ${id} eliminado`;
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         } 
     }
 
@@ -107,7 +108,7 @@ class ContenedorFirebase {
 
             return `Producto con id ${idProducto} agregado al carrito con id ${idCarrito}`;
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         }
     }
 
@@ -121,7 +122,7 @@ class ContenedorFirebase {
             const productos = carritoSnap.data().productos;
             return productos;
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         }
     }
 
@@ -144,7 +145,7 @@ class ContenedorFirebase {
             
             return `Producto con id ${idProducto} eliminado del carrito con id ${idCarrito}`;
         } catch (error) {
-            console.error(`Error: ${error}`);
+            logger.error(`Error: ${error}`);
         }
     }
     

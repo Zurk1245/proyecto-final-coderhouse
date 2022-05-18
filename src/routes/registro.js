@@ -3,6 +3,7 @@ const passport = require('passport');
 const registro = express.Router();
 const { createTransport } = require("nodemailer");
 const { CREDENCIALES_ADMINISTRADOR } = require("./../config");
+const logger = require("../winston-logger");
 
 registro.get("/", (req, res) => {
     let url;
@@ -42,11 +43,10 @@ registro.post("/", passport.authenticate("registro", { failureRedirect: "/regist
             </ul>
             <h2 style="color: blue;">Saludos administrador!</h2>`
         }
-        const info = await transporter.sendMail(mailOptions)
-        console.log(info);
+        const info = await transporter.sendMail(mailOptions);
         res.redirect("/");
      } catch (error) {
-        console.log(error);
+        logger.error(error);
      }
 });
 

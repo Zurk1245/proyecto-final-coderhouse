@@ -8,20 +8,21 @@ ADD_TO_CART_BTNS.forEach(btn => {
     let cantidadClicks = 0;
     btn.addEventListener("click", () => {
         let precioCarritoTotal = Number(elementoPrecioTotal.textContent);
-        cantidadClicks++;
-
         const productName = btn.getAttribute("prod_ref");
         const productPrice = Number(btn.getAttribute("prod_price"));
         const productExists = document.getElementById(productName);
 
         if (productExists !== null) {
+            const productCard = document.getElementById(`${productName}-card`);
+            cantidadClicks == 0 ? cantidadClicks = 1 : cantidadClicks++;
+            productCard.setAttribute("unidades", cantidadClicks);
             productExists.textContent = `${cantidadClicks} x ${productName} - $${productPrice}`;
             elementoPrecioTotal.textContent = precioCarritoTotal + productPrice;
-            const productCard = document.getElementById(`${productName}-card`);
-            productCard.setAttribute("unidades", cantidadClicks);
             return;
         }
 
+        cantidadClicks = 0;
+        cantidadClicks++;
         const cardWithProduct = document.createElement("div");
         cardWithProduct.className = "cardWithProduct";
         const productId = btn.getAttribute("prod_id");
@@ -33,7 +34,6 @@ ADD_TO_CART_BTNS.forEach(btn => {
         cardContent.textContent = `${cantidadClicks} x ${productName} - $${productPrice}`;
         cardWithProduct.appendChild(cardContent);
         carrito.appendChild(cardWithProduct);
-
         elementoPrecioTotal.textContent = precioCarritoTotal + productPrice;
     });
 });
@@ -92,10 +92,15 @@ enviarSolicitudBtn.addEventListener("click", async () => {
     return;
 });
 
-/*
 vaciarBtn.addEventListener("click", () => {
-
+    const listaDeProductos = document.querySelectorAll(".cardWithProduct");
+    for (let i = 0; i < ADD_TO_CART_BTNS.length; i++) {
+        cantidadClicks = 0;
+    }
+    for (let i = 0; i < listaDeProductos.length; i++) {
+        const elementoParaEliminar = listaDeProductos[i];
+        elementoParaEliminar.setAttribute("unidades", 0);
+        elementoPrecioTotal.textContent = "0.00";
+        carrito.removeChild(elementoParaEliminar);
+    }
 });
-
-
-*/

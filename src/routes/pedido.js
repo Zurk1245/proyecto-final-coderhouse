@@ -3,8 +3,7 @@ const pedido = express.Router();
 const { createTransport } = require("nodemailer");
 const { CREDENCIALES_ADMINISTRADOR } = require("./../config");
 const twilio = require('twilio');
-
-
+const logger = require("../winston-logger");
 
 pedido.post("/", async (req, res) => {
     try {
@@ -41,29 +40,27 @@ pedido.post("/", async (req, res) => {
         }
         const info = await transporter.sendMail(mailOptions);
 
-
-
         const accountSid = 'AC87fc4555e2322dd35e1c59e15856fac6';
-        const authToken = '06afcec0d1e17c865a9f33997fee7f4d';
+        const authToken = 'f058e9218e017273dd92edcf14577b75';
         
         const client = twilio(accountSid, authToken)
         
-           const mensajeAdministrador = await client.messages.create({
-              body: mailOptions.subject,
-              from: 'whatsapp:+14155238886',
-              to: 'whatsapp:+5491163329554'
-           })
+        const mensajeAdministrador = await client.messages.create({
+            body: mailOptions.subject,
+            from: 'whatsapp:+14155238886',
+            to: `whatsapp:${CREDENCIALES_ADMINISTRADOR.telefono}`
+        });
 
-           const mensajeCliente = await client.messages.create({
-            body: 'Hola! Tu pedido en el E-commerce ya está siendo procesado. Muchas gracias por elegirnos. Saludos!',
+        const mensajeCliente = await client.messages.create({
+            body: `Hola ${req.user.nombre}! Tu pedido en el E-commerce ya está siendo procesado. Muchas gracias por elegirnos. Saludos!`,
             from: 'whatsapp:+14155238886',
             to: `whatsapp:${req.user.telefono}`
-         })
+        });
 
         res.send({ status: "success!" });
-     } catch (error) {
-        console.log(error);
-     }
+    } catch (error) {
+        logger.error(error);
+    }
 });
 
 module.exports = pedido;

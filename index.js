@@ -7,8 +7,8 @@ const passport = require('passport');
 const { loginStrategy, registroStrategy } = require("./src/passport-strategies");
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
-//const MongoStore = require("connect-mongo");
 const UsuarioModel = require("./src/contenedores/mongodb-contenedor/models/usuario-model");
+const logger = require("./src/winston-logger");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
@@ -54,7 +54,7 @@ passport.deserializeUser(async (id, done) => {
         const usuario = await UsuarioModel.findById(id);
         done(null, usuario);    
     } catch (error) {
-        console.log(error)
+        logger.error(error);
     }
 });
 
@@ -79,6 +79,7 @@ app.get('*', (req, res) => {
         error: -2,
         descripcion: `Error 404. Ruta ${req.url} método ${req.method} no implementado`
     }
+    logger.warn(pathError);
     res.send(pathError);
 });
 
@@ -93,13 +94,13 @@ if (cluster.isMaster && CLUSTER) {
         cluster.fork();
     }
     cluster.on('exit', worker => {
-        console.log('Worker', worker.process.pid, 'died', new Date().toLocaleString());
+        logger.warn(`Worker, ${worker.process.pid} died, ${new Date().toLocaleString()}`);
         cluster.fork();
     })
 
 } else {
 	const server = app.listen(PORT, () => {
-		console.log("Sever running at port", PORT, `using the ${process.env.DB} database`);
+		logger.info(`Sever running at port ${PORT} using the ${process.env.DB} database`);
 	});
-	server.on("error", error => console.log(error));
+	server.on("error", error => logger.error(error));
 }

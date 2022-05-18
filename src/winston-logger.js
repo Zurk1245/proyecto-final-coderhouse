@@ -1,8 +1,8 @@
 const winston = require("winston");
 const logger = winston.createLogger({
-    level: "info",
+    level: "silly",
     transports: [
-        new winston.transports.Console({ level: "info" }),
+        new winston.transports.Console({ level: "silly" }),
         new winston.transports.File({ filename: "./logs/warn.log", level: "warn" }),
         new winston.transports.File({ filename: "./logs/error.log", level: "error" })
     ]

@@ -1,6 +1,6 @@
 const fs = require("fs");
-//const carrito = require("../../routes/carritos");
 const Carrito = require("../../unidades/carrito");
+const logger = require("../../winston-logger");
 
 class ContenedorCarritos {
     constructor(archivo) {
@@ -13,13 +13,12 @@ class ContenedorCarritos {
             const parsedData = JSON.parse(data);
             const carrito = new Carrito();
             carrito.id = parsedData.length == 0 ? 1 : parseInt(parsedData[parsedData.length - 1].id) + 1;
-            console.log(carrito);
             parsedData.push(carrito);
             const stringifiedData = JSON.stringify(parsedData, null, '\t');
             await fs.promises.writeFile(this.archivo, stringifiedData);
             return `Carrito creado con el id ${carrito.id}`;
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -28,10 +27,9 @@ class ContenedorCarritos {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
             const desiredObject = parsedData.find(obj => obj.id == Number);
-            console.log(desiredObject ? desiredObject : null);
             return desiredObject ? desiredObject : null; 
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -39,10 +37,9 @@ class ContenedorCarritos {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            console.log(parsedData ? parsedData : null);
             return parsedData ? parsedData : null; 
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -54,7 +51,7 @@ class ContenedorCarritos {
             const desiredProducts = parsedData[carritoPosition].productos;
             return desiredProducts.length ? desiredProducts : `El carrito con id ${carritoId} no tiene productos agregados`; 
         } catch (error) {
-            console.error(error);
+            logger.error(error);
         }
     }
 
@@ -87,7 +84,7 @@ class ContenedorCarritos {
             }
             
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -111,7 +108,7 @@ class ContenedorCarritos {
                 }
             }
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 
@@ -129,7 +126,7 @@ class ContenedorCarritos {
                 return `Carrito ${carritoId} eliminado`;
             }
         } catch (error) {
-                console.log(error);
+                logger.error(error);
             }
     }
 
@@ -137,9 +134,9 @@ class ContenedorCarritos {
         try {
             await fs.promises.writeFile(this.archivo, '[]');
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
-            console.log(data);
+            logger.info(data);
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 }

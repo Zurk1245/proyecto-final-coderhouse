@@ -61,6 +61,10 @@ section {
     margin: 15px 0;
 }
 
+#perfil {
+    margin-top: 50px;
+}
+
 .title {
     font-size: 1.7rem;
     margin: 0 auto;
@@ -78,11 +82,7 @@ section {
 .foto-perfil {
     border-radius: 10px;
     border: 5px solid black;
-    /* position: absolute;
-    top: 10px;
-    right: 10px; */
     width: 15vw;
-    
 }
 
 #carrito {
@@ -91,7 +91,7 @@ section {
     position: fixed;
     top: 50px;
     right: 10px;
-    /* width: 100%; */
+    width: 15vw;
     padding: 20px 15px;
 }
 

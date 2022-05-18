@@ -1,7 +1,6 @@
 const express = require("express");
 const passport = require('passport');
 const login = express.Router();
-const { isLogged } = require("../middleware-functions");
 
 login.get("/", (req, res) => {
     let url;

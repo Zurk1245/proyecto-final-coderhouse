@@ -4,8 +4,7 @@ const MONGO_URL = config.mongodbRemote.cnxStr;
 const { createHash, isValidPassword } = require("./middleware-functions");
 const mongoose = require("mongoose");
 const UsuarioModel = require("./contenedores/mongodb-contenedor/models/usuario-model");
-const res = require('express/lib/response');
-const { info } = require('winston');
+const logger = require("./winston-logger");
 
 /*----------- Strategies -----------*/
 const loginStrategy = new LocalStrategy(async (username, password, done) => {
@@ -16,17 +15,17 @@ const loginStrategy = new LocalStrategy(async (username, password, done) => {
                 return done(err);
             }
             if (!user) {
-                console.log(`Usuario no encontrado con el username ${username}`);
+                logger.error(`Usuario no encontrado con el username ${username}`);
                 return done(null, false);
             }
             if (!isValidPassword(user, password)) {
-                console.log("Contraseña invalida");
+                logger.error("Contraseña invalida");
                 return done(null, false);
             }
             return done(null, user);
         })
     } catch (error) {
-        console.log(error);        
+        logger.error(error);        
     }
 })
 const registroStrategy = new LocalStrategy({passReqToCallback: true}, async (req, username, password, done) => {
@@ -34,11 +33,11 @@ const registroStrategy = new LocalStrategy({passReqToCallback: true}, async (req
         await mongoose.connect(MONGO_URL);
         UsuarioModel.findOne({ username }, (err, user) => {
             if (err) {
-                console.log(`Error en el registro: ${err}`);
+                logger.error(`Error en el registro: ${err}`);
                 return done(err);
             }
             if (user) {
-                console.log("El usuario ya está registrado");
+                logger.error("El usuario ya está registrado");
                 return done(null, false);
             }
             const newUser = {
@@ -52,16 +51,15 @@ const registroStrategy = new LocalStrategy({passReqToCallback: true}, async (req
             }
             UsuarioModel.create(newUser, (err, user) => {
                 if (err) {
-                    console.log(`Error registrando al usuario: ${err}`);
+                    logger.error(`Error registrando al usuario: ${err}`);
                     done(err);
                 }
-                console.log(user);
-                console.log("Registro exitoso");
+                logger.info("Registro exitoso");
                 done(null, user);
             });
         })
     } catch (error) {
-        console.log(error);        
+        logger.error(error);        
     }
 });
 
