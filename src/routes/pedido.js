@@ -55,7 +55,7 @@ pedido.post("/", async (req, res) => {
             to: `whatsapp:${req.user.telefono}`
         });
 
-        res.send({ status: "success!" });
+        res.redirect("/");
     } catch (error) {
         logger.error(error);
     }

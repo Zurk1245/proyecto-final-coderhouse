@@ -1,4 +1,10 @@
 # Proyecto-Final-Coderhouse : tercera entrega
+Esta es la tercera entrega del proyecto final del cusro de programación Backend de Coderhouse. Se implementó:
+- Frontend para las diferentes rutas del E-commerce
+- Autenticación del usuario
+- Servicio de mensajería
+- Prueba de performance
+- Uso de loggers
 
 # Comandos para la prueba de performance de artillery 
 1. artillery quick --count 50 -n 10 "http://localhost:8080/" > ./src/performance/artillery_performance.txt
