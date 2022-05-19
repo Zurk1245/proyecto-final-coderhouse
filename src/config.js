@@ -1,13 +1,16 @@
 require("dotenv").config();
 module.exports = {
     PORT: process.env.PORT || 8080,
+    CLUSTER: false,
     mongodbRemote: {
         client: "mongodb",
         cnxStr: process.env.CONNECTION_STRING
-    }, 
+    },
+    CREDENCIALES_ADMINISTRADOR: {
+        mail: "mendez.mariano@outlook.com.ar",
+        telefono: "+5491163329554"
+    },
     firebase: {
-                // Your web app's Firebase configuration
-                // For Firebase JS SDK v7.20.0 and later, measurementId is optional
                 apiKey: "AIzaSyDnNfnpNf5plsgkHivEuI6wPNbhaiFb3kE",
                 authDomain: "ecommerce-backend-de062.firebaseapp.com",
                 projectId: "ecommerce-backend-de062",
@@ -19,9 +22,5 @@ module.exports = {
     archivo: {
         productosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/productos.txt",
         carritosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/carritos.txt"
-    },
-    CREDENCIALES_ADMINISTRADOR: {
-        mail: "mendez.mariano@outlook.com.ar",
-        telefono: "+5491163329554"
-    }
+    }   
 }

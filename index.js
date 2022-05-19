@@ -86,9 +86,9 @@ app.get('*', (req, res) => {
 /*============================[Servidor]============================*/
 const PORT = process.env.PORT || 8080;
 const numCPUs = require("os").cpus().length;
-const CLUSTER = false;
+const config = require("./src/config");
 
-if (cluster.isMaster && CLUSTER) {
+if (cluster.isMaster && config.CLUSTER) {
 
     for (let i = 0; i < numCPUs; i++) {
         cluster.fork();
@@ -100,7 +100,7 @@ if (cluster.isMaster && CLUSTER) {
 
 } else {
 	const server = app.listen(PORT, () => {
-		logger.info(`Sever running at port ${PORT} using the ${process.env.DB} database`);
+		logger.info(`Process with pid ${process.pid} running at port ${PORT} using the ${process.env.DB} database`);
 	});
 	server.on("error", error => logger.error(error));
 }
