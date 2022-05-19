@@ -10,6 +10,10 @@ module.exports = {
         mail: "mendez.mariano@outlook.com.ar",
         telefono: "+5491163329554"
     },
+    CREDENCIALAES_TWILIO: {
+        accountSid: process.env.TWILIO_ACCOUNT_SID,
+        authToken: process.env.TWILIO_AUTH_TOKEN
+    },
     firebase: {
                 apiKey: "AIzaSyDnNfnpNf5plsgkHivEuI6wPNbhaiFb3kE",
                 authDomain: "ecommerce-backend-de062.firebaseapp.com",

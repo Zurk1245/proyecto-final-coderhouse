@@ -4,6 +4,7 @@ const { createTransport } = require("nodemailer");
 const { CREDENCIALES_ADMINISTRADOR } = require("./../config");
 const twilio = require('twilio');
 const logger = require("../winston-logger");
+const config = require("../config");
 
 pedido.post("/", async (req, res) => {
     try {
@@ -40,10 +41,7 @@ pedido.post("/", async (req, res) => {
         }
         const info = await transporter.sendMail(mailOptions);
 
-        const accountSid = 'AC87fc4555e2322dd35e1c59e15856fac6';
-        const authToken = 'f058e9218e017273dd92edcf14577b75';
-        
-        const client = twilio(accountSid, authToken)
+        const client = twilio(config.CREDENCIALAES_TWILIO.accountSid, config.CREDENCIALAES_TWILIO.authToken);
         
         const mensajeAdministrador = await client.messages.create({
             body: mailOptions.subject,
