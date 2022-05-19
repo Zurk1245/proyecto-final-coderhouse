@@ -39,8 +39,14 @@ ADD_TO_CART_BTNS.forEach(btn => {
 });
 
 enviarSolicitudBtn.addEventListener("click", async () => {
+    let url;
+    if (window.location.href.includes("localhost")) {
+        url = "http://localhost:8080";
+    } else {
+        url = "http://entregable-coder.herokuapp.com";
+    }
     // 1.CREAR CARRITO
-    const crearCarrito = await fetch("http://localhost:8080/api/carrito", {
+    const crearCarrito = await fetch(`${url}/api/carrito`, {
         method: "POST"
     });
     const dataCarrito = await crearCarrito.json();
@@ -55,7 +61,7 @@ enviarSolicitudBtn.addEventListener("click", async () => {
             id: productoId,
             cantidad: cantidadDeUnidades
         };
-        const agregarProductoAlCarrito = await fetch(`http://localhost:8080/api/carrito/${idCarrito}/productos`, {
+        const agregarProductoAlCarrito = await fetch(`${url}/api/carrito/${idCarrito}/productos`, {
             "method": "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +87,7 @@ enviarSolicitudBtn.addEventListener("click", async () => {
 
     };
     
-    const mailRequest = await fetch("http://localhost:8080/pedido", {
+    const mailRequest = await fetch(`${url}/pedido`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
