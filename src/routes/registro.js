@@ -10,7 +10,7 @@ registro.get("/", (req, res) => {
     if (req.headers.host.includes("localhost")) {
         url = "http://localhost:8080";
     } else {
-        url = "http://entregable-coder.herokuapp.com";
+        url = "http://e-commerce-coderhouse.herokuapp.com";
     }
     res.render("registro", { url });
 });

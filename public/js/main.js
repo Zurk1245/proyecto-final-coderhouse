@@ -43,7 +43,7 @@ enviarSolicitudBtn.addEventListener("click", async () => {
     if (window.location.href.includes("localhost")) {
         url = "http://localhost:8080";
     } else {
-        url = "http://entregable-coder.herokuapp.com";
+        url = "http://e-commerce-coderhouse.herokuapp.com";
     }
     // 1.CREAR CARRITO
     const crearCarrito = await fetch(`${url}/api/carrito`, {
