@@ -7,6 +7,8 @@ const passport = require('passport');
 const { loginStrategy, registroStrategy } = require("./src/passport-strategies");
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo");
+const config = require("./src/config");
 const UsuarioModel = require("./src/contenedores/mongodb-contenedor/models/usuario-model");
 const logger = require("./src/winston-logger");
 
@@ -26,10 +28,10 @@ app.set("views", "./src/views");
 /*----------- Session -----------*/
 app.use(cookieParser("secreto"));
 app.use(session({
-        /*store: MongoStore.create({
-            mongoUrl: MONGO_URL,
-            mongoOptions: advancedOptions
-        }),*/
+        store: MongoStore.create({
+            mongoUrl: config.mongodbRemote.cnxStr,
+            mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true }
+        }),
         secret: "secreto",
         cookie: {
             httpOnly: false,
@@ -86,7 +88,6 @@ app.get('*', (req, res) => {
 /*============================[Servidor]============================*/
 const PORT = process.env.PORT || 8080;
 const numCPUs = require("os").cpus().length;
-const config = require("./src/config");
 
 if (cluster.isMaster && config.CLUSTER) {
 
