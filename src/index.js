@@ -4,18 +4,19 @@ const app = express();
 const cluster = require("cluster");
 const hbs = require("express-handlebars");
 const passport = require('passport');
-const { loginStrategy, registroStrategy } = require("./src/passport-strategies");
+const { loginStrategy, registroStrategy } = require("./config/passport-strategies");
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
-const config = require("./src/config");
-const UsuarioModel = require("./src/contenedores/mongodb-contenedor/models/usuario-model");
-const logger = require("./src/winston-logger");
+const config = require("./config/config");
+const UsuarioModel = require("./persistencia/models/usuario-model");
+const logger = require("./config/winston-logger");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static("public"));
+app.use(express.static("./public"));
+app.use("/auth", express.static("./public"));
 
 /*----------- Motor de plantillas -----------*/
 app.engine("hbs", hbs.engine({
@@ -60,20 +61,10 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-/*============================[Routers]============================*/
-const productosRouter = require("./src/routes/productos");
-const carritoRouter = require("./src/routes/carritos");
-const registroRouter = require("./src/routes/registro");
-const loginRouter = require("./src/routes/login");
-const pedidoRouter = require("./src/routes/pedido");
-const homeRouter = require("./src/routes/home");
+/*============================[Router]============================*/
 
-app.use("/api/productos", productosRouter);
-app.use("/api/carrito", carritoRouter);
-app.use("/registro", registroRouter);
-app.use("/login", loginRouter);
-app.use("/pedido", pedidoRouter);
-app.use("/", homeRouter);
+const indexRouter = require("./routes/index.routes");
+app.use("/", indexRouter);
 
 /*----------- Fail route -----------*/
 app.get('*', (req, res) => {
@@ -101,7 +92,7 @@ if (cluster.isMaster && config.CLUSTER) {
 
 } else {
 	const server = app.listen(PORT, () => {
-		logger.info(`Process with pid ${process.pid} running at port ${PORT} using the ${process.env.DB} database`);
+		logger.info(`Process with pid ${process.pid} running at port ${PORT}`);
 	});
 	server.on("error", error => logger.error(error));
 }

@@ -1,5 +1,5 @@
 const bCrypt = require("bcrypt");
-const logger = require("./winston-logger");
+const logger = require("../config/winston-logger");
 
 function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
@@ -11,7 +11,7 @@ function isLogged(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    return res.redirect("/login");
+    return res.redirect("/auth/login");
 }
 
 let administrador = true;

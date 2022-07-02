@@ -1,14 +1,8 @@
-# Proyecto-Final-Coderhouse : tercera entrega
+# Proyecto-Final-Coderhouse : entrega final
 
 ## Link Heroku: http://e-commerce-coderhouse.herokuapp.com/
 
-Esta es la tercera entrega del proyecto final del cusro de programación Backend de Coderhouse. Se implementó:
-- Frontend para las diferentes rutas del E-commerce
-- Autenticación del usuario
-- Servicio de mensajería
-- Prueba de performance
-- Uso de loggers
-
-# Comandos para la prueba de performance de artillery 
-1. artillery quick --count 50 -n 10 "http://localhost:8080/" > ./src/performance/artillery_performance.txt
-2. artillery quick --count 50 -n 10 "http://localhost:8080/" > ./src/performance/artillery_cluster_performance.txt
+Esta es la entrega final del proyecto final del cusro de programación Backend de Coderhouse. Se implementó:
+- Frontend para un E-commerce (motor de platillas handlebars)
+- Backend con el framework express y diversas librerías para complementar funcionalidades (como autenticación del usuario, servicio de mensajería, prueba de performance, uso de loggers y más)
+- Persistencia con la base de datos no relacional MongoDB

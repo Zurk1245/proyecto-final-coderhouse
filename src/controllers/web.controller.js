@@ -1,12 +1,32 @@
-const express = require("express");
-const pedido = express.Router();
+const config = require('../config/config');
 const { createTransport } = require("nodemailer");
-const { CREDENCIALES_ADMINISTRADOR } = require("./../config");
 const twilio = require('twilio');
-const logger = require("../winston-logger");
-const config = require("../config");
+ 
+const homePage = async (req, res, next) => {
+    try {
+        let url;
+        if (req.headers.host.includes("localhost")) {
+            url = "http://localhost:8080";
+        } else {
+            url = "http://e-commerce-coderhouse.herokuapp.com";
+        }
+        const productsRequest = await fetch(`${url}/api/productos`);
+        const products = await productsRequest.json();
+        const usuario = {
+            email: req.user.username,
+            nombre: req.user.nombre, 
+            direccion: req.user.direccion,
+            edad: req.user.edad,
+            telefono: req.user.telefono,
+            foto: req.user.foto
+        }
+        res.render("home", { usuario, url, products} );
+    } catch (error) {
+        next(error)
+    }
+}
 
-pedido.post("/", async (req, res) => {
+const pedido = async (req, res, next) => {
     try {
         const transporter = createTransport({
             service: "gmail",
@@ -29,7 +49,7 @@ pedido.post("/", async (req, res) => {
 
         const mailOptions = {
             from: 'Servidor Node.js',
-            to: CREDENCIALES_ADMINISTRADOR.mail,
+            to: config.CREDENCIALES_ADMINISTRADOR.mail,
             subject: `nuevo pedido de ${req.user.username}`,
             html: `<h2 style="color: blue;">Se ha solicitado un nuevo pedido en su aplicación de E-commerce. Los datos del pedido son los siguientes:</h2>
                 <ul>
@@ -39,17 +59,17 @@ pedido.post("/", async (req, res) => {
                 </ul>
                 <h2 style="color: blue;">Saludos administrador!</h2>`
         }
-        const info = await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
 
         const client = twilio(config.CREDENCIALAES_TWILIO.accountSid, config.CREDENCIALAES_TWILIO.authToken);
         
-        const mensajeAdministrador = await client.messages.create({
+        await client.messages.create({
             body: mailOptions.subject,
             from: 'whatsapp:+14155238886',
-            to: `whatsapp:${CREDENCIALES_ADMINISTRADOR.telefono}`
+            to: `whatsapp:${config.CREDENCIALES_ADMINISTRADOR.telefono}`
         });
 
-        const mensajeCliente = await client.messages.create({
+        await client.messages.create({
             body: `Hola ${req.user.nombre}! Tu pedido en el E-commerce ya está siendo procesado. Muchas gracias por elegirnos. Saludos!`,
             from: 'whatsapp:+14155238886',
             to: `whatsapp:${req.user.telefono}`
@@ -57,8 +77,11 @@ pedido.post("/", async (req, res) => {
 
         res.redirect("/");
     } catch (error) {
-        logger.error(error);
+        next(error)
     }
-});
+}
 
-module.exports = pedido;
+module.exports = {
+    homePage,
+    pedido,
+}

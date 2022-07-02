@@ -1,6 +1,6 @@
-const ProductoModel = require("../../contenedores/mongodb-contenedor/models/producto-model");
-const ContenedorMongoDB = require("../../contenedores/mongodb-contenedor/contenedor-mongodb");
-const config = require("../../config");
+const ProductoModel = require("../../persistencia/models/producto-model");
+const ContenedorMongoDB = require("../../persistencia/contenedor-mongodb");
+const config = require("../../config/config");
 
 const productosDaoMongodb = new ContenedorMongoDB(config.mongodbRemote, ProductoModel, "Producto");
 

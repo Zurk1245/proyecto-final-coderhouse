@@ -1,6 +1,6 @@
 <h1 class="title">Registro de usuario</h1><br>
 
-<form action="{{url}}/registro" method="post">
+<form action="{{url}}/auth/registro" method="post">
     <label for="username">Email</label><br>
     <input name="username" type="email" required><br><br>
     <label for="password">Contraseña</label><br>
@@ -19,6 +19,6 @@
     <input class="submit-button" type="submit" value="Enviar">
 </form>
 
-<form action="{{url}}/login" method="get">
+<form action="{{url}}/auth/login" method="get">
     <button class="nav-button">Loguearse</button>
 </form>

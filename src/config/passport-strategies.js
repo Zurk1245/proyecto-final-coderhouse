@@ -1,9 +1,9 @@
 const LocalStrategy = require('passport-local').Strategy;
 const config = require("./config");
 const MONGO_URL = config.mongodbRemote.cnxStr;
-const { createHash, isValidPassword } = require("./middleware-functions");
+const { createHash, isValidPassword } = require("../middlewares/middleware-functions");
 const mongoose = require("mongoose");
-const UsuarioModel = require("./contenedores/mongodb-contenedor/models/usuario-model");
+const UsuarioModel = require("../persistencia/models/usuario-model");
 const logger = require("./winston-logger");
 
 /*----------- Strategies -----------*/

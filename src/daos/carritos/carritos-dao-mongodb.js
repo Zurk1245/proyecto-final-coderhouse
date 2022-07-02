@@ -1,6 +1,6 @@
-const CarritoModel = require("../../contenedores/mongodb-contenedor/models/carrito-model");
-const ContenedorMongoDB = require("../../contenedores/mongodb-contenedor/contenedor-mongodb");
-const config = require("../../config");
+const CarritoModel = require("../../persistencia/models/carrito-model");
+const ContenedorMongoDB = require("../../persistencia/contenedor-mongodb");
+const config = require("../../config/config");
 
 const carritosDaoMongodb = new ContenedorMongoDB(config.mongodbRemote, CarritoModel, "Carrito");
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const logger = require('../../winston-logger');
+const logger = require('../config/winston-logger');
 const CarritoModel = require('./models/carrito-model');
 const ProductoModel = require('./models/producto-model');
 
@@ -35,11 +35,7 @@ class ContenedorMongoDB {
             return response;
         } catch (error) {
             logger.error(`Error: ${error}`);
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async getAll() {
@@ -49,11 +45,7 @@ class ContenedorMongoDB {
             return resultado;
         } catch (error) {
             logger.error(`Error: ${error}`);
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async getById(id) {
@@ -63,11 +55,7 @@ class ContenedorMongoDB {
             return resultado;
         } catch (error) {
             logger.error(`Error: ${error}`);
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async updateById(updatedElement, id) {
@@ -77,11 +65,7 @@ class ContenedorMongoDB {
             return `${this.elementType} con id ${id} actualizado`;
         } catch (error) {
             logger.error(`Error: ${error}`);
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async deleteById(id) {
@@ -94,11 +78,7 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `${this.elementType} con id ${id} no encontrado`;
             }
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async addProductToCarritoById(idCarrito, idProducto, cantidadDeUnidades) {
@@ -122,11 +102,7 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `Carrito o producto no encontrado`;
             }
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async getProductsByCarritoId(carritoId) {
@@ -139,11 +115,7 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `Carrito con id ${carritoId} no encontrado`;
             }
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
 
     async deleteProductFromCarritoByIds(idCarrito, idProducto) {
@@ -160,11 +132,7 @@ class ContenedorMongoDB {
             if (error.message.includes("Cast to ObjectId failed for value")) {
                 return `Carrito con id ${idCarrito} o producto con id ${idProducto} no encontrado`;
             }
-        } /*finally {
-            mongoose.disconnect().catch((error) => {
-                logger.error(error);
-            })
-        }*/
+        }
     }
     
 }
