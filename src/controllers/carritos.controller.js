@@ -1,4 +1,4 @@
-const carritoDao = require("../daos/carritos/carritos-dao-mongodb");
+const carritoDao = require("../persistencia/daos/carritos/carritos-dao-mongodb");
 
 const createCarrito = async (req, res, next) => {
     try {

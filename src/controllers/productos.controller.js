@@ -1,4 +1,4 @@
-const productosDao = require("../daos/productos/productos-dao-mongodb");
+const productosDao = require("../persistencia/daos/productos/productos-dao-mongodb");
 
 const addProductToCatalog = async (req, res, next) => {
     try {

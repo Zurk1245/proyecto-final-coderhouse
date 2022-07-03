@@ -1,8 +1,6 @@
-const passport = require("passport");
 const { createTransport } = require("nodemailer");
 const { CREDENCIALES_ADMINISTRADOR } = require("./../config/config");
 
-// REGISTRO
 const registerView = (req, res, next) => {
     try {
         let url;
@@ -60,7 +58,7 @@ const registerError = (req, res, next) => {
     }
 }
 
-//LOGIN
+
 const loginView = (req, res, next) => {
     try {
         let url;
@@ -91,7 +89,7 @@ const loginError = (req, res, next) => {
     }
 }
 
-//LOGOUT
+
 const logout = (req, res, next) => {
     try {
         res.render("logout", { nombre: req.user.nombre });

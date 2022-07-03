@@ -62,7 +62,6 @@ passport.deserializeUser(async (id, done) => {
 });
 
 /*============================[Router]============================*/
-
 const indexRouter = require("./routes/index.routes");
 app.use("/", indexRouter);
 
