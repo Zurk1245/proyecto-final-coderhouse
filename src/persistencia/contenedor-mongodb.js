@@ -13,7 +13,6 @@ class ContenedorMongoDB {
 
     async save(element) {
         try {
-            await mongoose.connect(this.config.cnxStr);
             let elementoParaAgregar;
 
             if (this.model == CarritoModel) {
@@ -40,7 +39,6 @@ class ContenedorMongoDB {
 
     async getAll() {
         try {
-            await mongoose.connect(this.config.cnxStr);
             const resultado = await this.model.find();
             return resultado;
         } catch (error) {
@@ -50,7 +48,6 @@ class ContenedorMongoDB {
 
     async getById(id) {
         try {
-            await mongoose.connect(this.config.cnxStr);
             const resultado = await this.model.find({_id: id});
             return resultado;
         } catch (error) {
@@ -60,8 +57,7 @@ class ContenedorMongoDB {
 
     async updateById(updatedElement, id) {
         try {
-            await mongoose.connect(this.config.cnxStr);
-            const resultado = await this.model.updateOne({_id: id}, { $set: updatedElement } );
+            await this.model.updateOne({_id: id}, { $set: updatedElement } );
             return `${this.elementType} con id ${id} actualizado`;
         } catch (error) {
             logger.error(`Error: ${error}`);
@@ -70,8 +66,7 @@ class ContenedorMongoDB {
 
     async deleteById(id) {
         try {
-            await mongoose.connect(this.config.cnxStr);
-            const result = await this.model.deleteOne({_id: id});
+            await this.model.deleteOne({_id: id});
             return `${this.elementType} con id ${id} eliminado`;
         } catch (error) {
             logger.error(`Error: ${error.message}`);
@@ -83,7 +78,6 @@ class ContenedorMongoDB {
 
     async addProductToCarritoById(idCarrito, idProducto, cantidadDeUnidades) {
         try {
-            await mongoose.connect(this.config.cnxStr);
             const productoParaAgregar = await ProductoModel.findById(idProducto);
             await ProductoModel.findOneAndUpdate( {_id: idProducto}, { cantidad: cantidadDeUnidades});
             productoParaAgregar.cantidad = cantidadDeUnidades;
@@ -107,7 +101,6 @@ class ContenedorMongoDB {
 
     async getProductsByCarritoId(carritoId) {
         try {
-            await mongoose.connect(this.config.cnxStr);
             const productosCarrito = await CarritoModel.findById(carritoId, {productos: 1, _id: 0});
             return productosCarrito;
         } catch (error) {
@@ -120,7 +113,6 @@ class ContenedorMongoDB {
 
     async deleteProductFromCarritoByIds(idCarrito, idProducto) {
         try {
-            await mongoose.connect(this.config.cnxStr);
             const carrito = await  CarritoModel.findOne({_id: idCarrito});
             let productos = carrito.productos;
             const productosActualizados = productos.filter(producto => producto._id != idProducto)

@@ -3,14 +3,14 @@ const express = require("express");
 const app = express();
 const cluster = require("cluster");
 const hbs = require("express-handlebars");
-const passport = require('passport');
-const { loginStrategy, registroStrategy } = require("./config/passport-strategies");
+const passport = require('./services/auth.services');
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 const config = require("./config/config");
 const UsuarioModel = require("./persistencia/models/usuario-model");
 const logger = require("./config/winston-logger");
+const { conectarMongo } = require("./persistencia/database/mongo.connection");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
@@ -47,19 +47,7 @@ app.use(session({
 /*----------- Passport -----------*/
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use("login", loginStrategy);
-passport.use("registro", registroStrategy);
-passport.serializeUser((user, done) => {
-    done(null, user._id);
-});
-passport.deserializeUser(async (id, done) => {
-    try {
-        const usuario = await UsuarioModel.findById(id);
-        done(null, usuario);    
-    } catch (error) {
-        logger.error(error);
-    }
-});
+
 
 /*============================[Router]============================*/
 const indexRouter = require("./routes/index.routes");
@@ -93,5 +81,8 @@ if (cluster.isMaster && config.CLUSTER) {
 	const server = app.listen(PORT, () => {
 		logger.info(`Process with pid ${process.pid} running at port ${PORT}`);
 	});
+    conectarMongo(config.mongodbRemote.cnxStr)
+                .then(() => logger.info('Mongodb conectado!'))
+                .catch(err => logger.error(`Error al conectar mongo: ${err.message}`));
 	server.on("error", error => logger.error(error));
 }

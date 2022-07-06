@@ -22,3 +22,26 @@
 {"level":"error"}
 {"level":"error"}
 {"level":"error","message":"Contraseña invalida"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error","message":"El usuario ya está registrado"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error","message":"Error en la deserialización del usuariooooo: MongooseError: Operation `usuarios.findOne()` buffering timed out after 10000ms"}
+{"level":"error","message":"Error en la deserialización del usuariooooo: MongooseError: Operation `usuarios.findOne()` buffering timed out after 10000ms"}
+{"level":"error"}
+{"level":"error","message":"Error el registro o en el envío de mail de registro: TypeError: Cannot read properties of undefined (reading 'nombre')"}
+{"level":"error","message":"Error el registro o en el envío de mail de registro: TypeError: Cannot read properties of undefined (reading 'nombre')"}
+{"level":"error","message":"Error el registro o en el envío de mail de registro: TypeError: Cannot read properties of undefined (reading 'nombre')"}
+{"level":"error","message":"El usuario ya está registrado"}

@@ -6,12 +6,12 @@ const router = express.Router();
 
 // REGISTRO
 router.get("/registro", authController.registerView);
-router.post("/registro", passport.authenticate("registro", { failureRedirect: "/auth/registro/error" }), authController.registerVerify);
+router.post("/registro", authController.registerVerify);
 router.get("/registro/error", authController.registerError);
 
 // LOGIN
 router.get("/login", authController.loginView);
-router.post("/login", passport.authenticate("login", { successRedirect: "/", failureRedirect: "/auth/login/error" }), authController.loginVerify);
+router.post("/login", authController.loginVerify);
 router.get("/login/error", authController.loginError);
 
 //LOGOUT

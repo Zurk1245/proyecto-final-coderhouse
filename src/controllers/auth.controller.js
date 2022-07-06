@@ -1,5 +1,5 @@
-const { createTransport } = require("nodemailer");
-const { CREDENCIALES_ADMINISTRADOR } = require("./../config/config");
+
+const passport = require("passport");
 
 const registerView = (req, res, next) => {
     try {
@@ -17,34 +17,7 @@ const registerView = (req, res, next) => {
 
 const registerVerify = async (req, res, next) => {
     try {
-        const transporter = createTransport({
-            service: "gmail",
-            port: 587,
-            auth: {
-                user: 'marianox3526@gmail.com',
-                pass: 'wunerwvdgapmlqol'
-            },
-            tls: {
-                rejectUnauthorized: false
-            }
-        });
-        const mailOptions = {
-            from: 'Servidor Node.js',
-            to: CREDENCIALES_ADMINISTRADOR.mail,
-            subject: 'nuevo registro',
-            html: `<h2 style="color: blue;">Se ha registrado un nuevo usuario en su aplicación de E-commerce. Los datos del nuevo usuario son los siguientes:</h2>
-            <ul>
-                <li>Nombre: ${req.user.nombre}</li>
-                <li>Email: ${req.user.username}</li>
-                <li>Dirección: ${req.user.direccion}</li>
-                <li>Edad: ${req.user.edad}</li>
-                <li>Teléfono: ${req.user.telefono}</li>
-                <li>Foto: <img src="${req.user.foto}" alt="Foto de perfil" style="width: 20px;"></li>
-            </ul>
-            <h2 style="color: blue;">Saludos administrador!</h2>`
-        }
-        await transporter.sendMail(mailOptions);
-        res.redirect("/");
+        return passport.authenticate("registro", { successRedirect: "/", failureRedirect: "/auth/registro/error" })(req, res, next);
     } catch (error) {
         next(error);
     }
@@ -75,7 +48,7 @@ const loginView = (req, res, next) => {
 
 const loginVerify = (req, res, next) => {
     try {
-        res.redirect(`/home`);
+        return passport.authenticate("login", { successRedirect: "/", failureRedirect: "/auth/login/error" })(req, res, next);
     } catch (error) {
         next(error);
     }
@@ -92,7 +65,13 @@ const loginError = (req, res, next) => {
 
 const logout = (req, res, next) => {
     try {
-        res.render("logout", { nombre: req.user.nombre });
+        let username;
+        if (req.user.nombre) {
+            username = req.user.nombre
+        } else {
+            username = "Usuario";
+        }
+        res.render("logout", { nombre: username });
         req.logOut();
     } catch (error) {
         next(error);
