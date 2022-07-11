@@ -3,6 +3,14 @@ const carrito = document.getElementById("carrito");
 const elementoPrecioTotal = document.getElementById("precio-total");
 const vaciarBtn = document.getElementById("btn-vaciar-carrito");
 const enviarSolicitudBtn = document.getElementById("btn-enviar-solicitud");
+const searchBtn = document.getElementById("searchBtn");
+
+let url;
+if (window.location.href.includes("localhost")) {
+    url = "http://localhost:8080";
+} else {
+    url = "http://e-commerce-coderhouse.herokuapp.com";
+}
 
 ADD_TO_CART_BTNS.forEach(btn => {
     let cantidadClicks = 0;
@@ -39,12 +47,6 @@ ADD_TO_CART_BTNS.forEach(btn => {
 });
 
 enviarSolicitudBtn.addEventListener("click", async () => {
-    let url;
-    if (window.location.href.includes("localhost")) {
-        url = "http://localhost:8080";
-    } else {
-        url = "http://e-commerce-coderhouse.herokuapp.com";
-    }
     // 1.CREAR CARRITO
     const crearCarrito = await fetch(`${url}/api/carrito`, {
         method: "POST"
@@ -87,7 +89,7 @@ enviarSolicitudBtn.addEventListener("click", async () => {
 
     };
     
-    const mailRequest = await fetch(`${url}/pedido`, {
+    const mailRequest = await fetch(`${url}/productos/pedido`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -109,4 +111,10 @@ vaciarBtn.addEventListener("click", () => {
         elementoPrecioTotal.textContent = "0.00";
         carrito.removeChild(elementoParaEliminar);
     }
+});
+
+searchBtn.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const categoria = document.getElementById("input-categoria").value;
+    window.location.href = `${url}/productos/${categoria}`;
 });

@@ -1,30 +1,21 @@
 require("dotenv").config();
+let url;
+if (process.env.NODE_ENV == "desarrollo") {
+    url = `http://localhost:${process.env.PORT}`;
+} else {
+    url = "http://e-commerce-coderhouse.herokuapp.com";
+}
+
 module.exports = {
     PORT: process.env.PORT || 8080,
+    NODE_ENV: process.env.NODE_ENV,
+    URL: url,
     CLUSTER: false,
     mongodbRemote: {
         client: "mongodb",
         cnxStr: process.env.CONNECTION_STRING
     },
     CREDENCIALES_ADMINISTRADOR: {
-        mail: "mendez.mariano@outlook.com.ar",
-        telefono: "+5491163329554"
+        mail: process.env.MAIL_ADMINISTRADOR,
     },
-    CREDENCIALAES_TWILIO: {
-        accountSid: process.env.TWILIO_ACCOUNT_SID,
-        authToken: process.env.TWILIO_AUTH_TOKEN
-    },
-    firebase: {
-                apiKey: "AIzaSyDnNfnpNf5plsgkHivEuI6wPNbhaiFb3kE",
-                authDomain: "ecommerce-backend-de062.firebaseapp.com",
-                projectId: "ecommerce-backend-de062",
-                storageBucket: "ecommerce-backend-de062.appspot.com",
-                messagingSenderId: "1079491613714",
-                appId: "1:1079491613714:web:d87a1bae8122b49c3b74cb",
-                measurementId: "G-45TEYN7FSQ"
-    },
-    archivo: {
-        productosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/productos.txt",
-        carritosPath: "c:/Users/maria/OneDrive/Escritorio/proyecto-final-coderhouse/src/DB/carritos.txt"
-    }   
 }

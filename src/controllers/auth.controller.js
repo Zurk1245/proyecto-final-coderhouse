@@ -1,15 +1,11 @@
 
-const passport = require("passport");
+const config = require("../config/config");
+const passport = require("../services/auth.services");
+
 
 const registerView = (req, res, next) => {
     try {
-        let url;
-        if (req.headers.host.includes("localhost")) {
-            url = "http://localhost:8080";
-        } else {
-            url = "http://e-commerce-coderhouse.herokuapp.com";
-        }
-        res.render("registro", { url });
+        res.render("registro", { url: config.URL });
     } catch (error) {
         next(error);
     }
@@ -17,7 +13,7 @@ const registerView = (req, res, next) => {
 
 const registerVerify = async (req, res, next) => {
     try {
-        return passport.authenticate("registro", { successRedirect: "/", failureRedirect: "/auth/registro/error" })(req, res, next);
+        return passport.authenticate("registro", { successRedirect: "/productos", failureRedirect: "/auth/registro/error" })(req, res, next);
     } catch (error) {
         next(error);
     }
@@ -34,13 +30,7 @@ const registerError = (req, res, next) => {
 
 const loginView = (req, res, next) => {
     try {
-        let url;
-        if (req.headers.host.includes("localhost")) {
-            url = "http://localhost:8080";
-        } else {
-            url = "http://e-commerce-coderhouse.herokuapp.com";
-        }
-        res.render("login", { url });
+        res.render("login", { url: config.URL });
     } catch (error) {
         next(error);
     }
@@ -48,7 +38,7 @@ const loginView = (req, res, next) => {
 
 const loginVerify = (req, res, next) => {
     try {
-        return passport.authenticate("login", { successRedirect: "/", failureRedirect: "/auth/login/error" })(req, res, next);
+        return passport.authenticate("login", { successRedirect: "/productos", failureRedirect: "/auth/login/error" })(req, res, next);
     } catch (error) {
         next(error);
     }

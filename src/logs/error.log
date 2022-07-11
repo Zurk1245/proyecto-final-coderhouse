@@ -45,3 +45,16 @@
 {"level":"error","message":"Error el registro o en el envío de mail de registro: TypeError: Cannot read properties of undefined (reading 'nombre')"}
 {"level":"error","message":"Error el registro o en el envío de mail de registro: TypeError: Cannot read properties of undefined (reading 'nombre')"}
 {"level":"error","message":"El usuario ya está registrado"}
+{"level":"error","message":"Contraseña invalida"}
+{"level":"error","message":"Contraseña invalida"}
+{"level":"error","message":"Contraseña invalida"}
+{"level":"error","message":"Contraseña invalida"}
+{"level":"error","message":"El usuario ya está registrado"}
+{"level":"error","message":"El usuario ya está registrado"}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}

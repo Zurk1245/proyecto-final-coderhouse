@@ -8,15 +8,17 @@ const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 const config = require("./config/config");
-const UsuarioModel = require("./persistencia/models/usuario-model");
 const logger = require("./config/winston-logger");
 const { conectarMongo } = require("./persistencia/database/mongo.connection");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+/*--- Middlewares para que las rutas puedan utilizar los archivos estáticos ---*/
 app.use(express.static("./public"));
 app.use("/auth", express.static("./public"));
+app.use("/auth/login", express.static("./public"));
+app.use("/auth/registro", express.static("./public"));
 
 /*----------- Motor de plantillas -----------*/
 app.engine("hbs", hbs.engine({
@@ -48,7 +50,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 /*============================[Router]============================*/
 const indexRouter = require("./routes/index.routes");
 app.use("/", indexRouter);
@@ -64,7 +65,6 @@ app.get('*', (req, res) => {
 });
 
 /*============================[Servidor]============================*/
-const PORT = process.env.PORT || 8080;
 const numCPUs = require("os").cpus().length;
 
 if (cluster.isMaster && config.CLUSTER) {
@@ -78,8 +78,8 @@ if (cluster.isMaster && config.CLUSTER) {
     })
 
 } else {
-	const server = app.listen(PORT, () => {
-		logger.info(`Process with pid ${process.pid} running at port ${PORT}`);
+	const server = app.listen(config.PORT, () => {
+		logger.info(`Process with pid ${process.pid} running at port ${config.PORT} en modo ${config.NODE_ENV}`);
 	});
     conectarMongo(config.mongodbRemote.cnxStr)
                 .then(() => logger.info('Mongodb conectado!'))

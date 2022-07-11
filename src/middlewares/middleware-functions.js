@@ -18,14 +18,14 @@ let administrador = true;
 
 function isAdmin(req, res, next) {
     if (administrador) {
-        next();
+        return next();
     }
     const pathError = {
         error: -1,
         descripcion: `Ruta ${req.url} método ${req.method} no autorizada`
     }
     logger.warn(pathError);
-    res.send(pathError);
+    return res.send(pathError);
 }
 
 module.exports = { createHash, isValidPassword, isLogged, isAdmin };

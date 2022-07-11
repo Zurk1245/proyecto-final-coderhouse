@@ -55,6 +55,15 @@ class ContenedorMongoDB {
         }
     }
 
+    async geyByCategory(categoria) {
+        try {
+            const resultado = await this.model.find({categoria: categoria});
+            return resultado;
+        } catch (error) {
+            logger.error(`Error: ${error}`);
+        }
+    }
+
     async updateById(updatedElement, id) {
         try {
             await this.model.updateOne({_id: id}, { $set: updatedElement } );
