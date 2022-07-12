@@ -1,19 +1,18 @@
 <h1>CATEGORIA {{categoria}}:</h1>
 <table border="2">
-        <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Foto</th>
-            <th>Categoria</th>
-        </tr>
-        {{#each products}}
-        <tr>
-            <td>{{this.nombre}}</td>
-            <td>${{this.precio}}</td>
-            <td style="display: flex; justify-content: center;"><img width="50" src={{this.foto}} alt={{this.nombre}}></td>
-        </tr>
-        {{/each}}
-    </table>
-<ol>
-    <li>asdsda</li>
-</ol>
+    <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Foto</th>
+    </tr>
+    {{#each products}}
+    <tr>
+        <td>{{this.descripcion}}</td>
+        <td>${{this.precio}}</td>
+        <td style="display: flex; justify-content: center;"><img width="50" src={{this.foto}}></td>
+    </tr>
+    {{/each}}
+</table>
+<form action="{{url}}/productos" method="get">
+    <button class="nav-button" type="submit">Volver a home</button>
+</form>

@@ -18,7 +18,7 @@ const pedido = async (req, res, next) => {
 
 const categoryPage = async (req, res, next) => {
     try {
-        webServices.getProductsByCategory(req, res, next);
+        await webServices.getProductsByCategory(req, res, next);
     } catch (error) {
         next(error);
     }

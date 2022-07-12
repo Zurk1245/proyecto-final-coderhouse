@@ -36,12 +36,12 @@ const getProductsFromCatalog = async (req, res, next) => {
     }
 }
 
-const getProductsByCategory = async (req, res, next) => {
+const getProductsByCategory = async (categoria) => {
     try {
-        const productos = await productosDao.getByCategory(req.params.categoria);
-        res.send(productos);
+        const productos = await productosDao.getByCategory(categoria.toLowerCase());
+        return productos;
     } catch (error) {
-        next(error);
+        console.log(error);
     }
 }
 

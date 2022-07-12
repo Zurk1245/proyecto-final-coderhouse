@@ -1,6 +1,7 @@
 const axios = require("axios");
 const config = require('../config/config');
 const { createTransport } = require("nodemailer");
+const productosController = require("../controllers/productos.controller");
 
 const displayHomePageView = async (req, res, next) => {
     try {
@@ -60,11 +61,12 @@ const enviarPedido = async (req, res, next) => {
     }
 }
 
-const getProductsByCategory = (req, res, next) => {
+const getProductsByCategory = async (req, res, next) => {
     try {
-        res.render("categoria", { categoria: req.params.categoria, products });
+        const categoria = req.params.categoria;
+        const products = await productosController.getProductsByCategory(categoria);
+        res.render("categoria", { url: config.URL, categoria: categoria.toUpperCase(), products });
     } catch (error) {
-        console.log(error);
         next(error);
     }
 }

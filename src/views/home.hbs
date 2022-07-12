@@ -27,7 +27,7 @@
 <h3 class="title">PRODUCTOS</h3>
 <form>
     <input id="input-categoria" name="categoria" type="text" placeholder="Filtre por categoría de producto">
-    <button id="searchBtn" type="submit">Buscar</button>
+    <button id="searchBtn" class="small-nav-button" type="submit">Buscar</button>
 </form>
 
 <div>
@@ -36,6 +36,7 @@
             <th>Nombre</th>
             <th>Precio</th>
             <th>Foto</th>
+            <th>Categoria</th>
             <th>Carrito</th>
         </tr>
         {{#each products}}
@@ -43,6 +44,7 @@
             <td>{{this.descripcion}}</td>
             <td>${{this.precio}}</td>
             <td style="display: flex; justify-content: center;"><img width="50" src={{this.foto}} alt={{this.descripcion}}></td>
+            <td>{{this.categoria}}</td>
             <td><button class="btn-agregar-carrito" prod_id="{{this._id}}" prod_ref="{{this.descripcion}}" prod_price="{{this.precio}}">+</button></td>
         </tr>
         {{/each}}

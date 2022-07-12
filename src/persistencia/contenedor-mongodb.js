@@ -55,9 +55,9 @@ class ContenedorMongoDB {
         }
     }
 
-    async geyByCategory(categoria) {
+    async getByCategory(categoria) {
         try {
-            const resultado = await this.model.find({categoria: categoria});
+            const resultado = await this.model.find({categoria: categoria}).lean();
             return resultado;
         } catch (error) {
             logger.error(`Error: ${error}`);

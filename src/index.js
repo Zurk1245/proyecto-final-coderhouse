@@ -19,6 +19,7 @@ app.use(express.static("./public"));
 app.use("/auth", express.static("./public"));
 app.use("/auth/login", express.static("./public"));
 app.use("/auth/registro", express.static("./public"));
+app.use("/productos/:categoria", express.static("./public"));
 
 /*----------- Motor de plantillas -----------*/
 app.engine("hbs", hbs.engine({
