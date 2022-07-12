@@ -24,7 +24,7 @@ app.use("/productos/:categoria", express.static("./public"));
 /*----------- Motor de plantillas -----------*/
 app.engine("hbs", hbs.engine({
     extname: ".hbs",
-    defaultLayout: "index.hbs",
+    defaultLayout: "index.hbs"
 }));
 app.set("view engine", "hbs");
 app.set("views", "./src/views");
@@ -54,6 +54,9 @@ app.use(passport.session());
 /*============================[Router]============================*/
 const indexRouter = require("./routes/index.routes");
 app.use("/", indexRouter);
+
+const { isLogged } = require("./middlewares/middleware-functions");
+app.get("/", isLogged);
 
 /*----------- Fail route -----------*/
 app.get('*', (req, res) => {

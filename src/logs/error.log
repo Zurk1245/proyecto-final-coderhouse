@@ -58,3 +58,6 @@
 {"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
 {"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
 {"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Producto\""}
+{"level":"error","message":"Contraseña invalida"}
+{"level":"error"}
+{"level":"error","message":"Error: TypeError: Cannot read properties of undefined (reading 'render'): Cannot read properties of undefined (reading 'render')"}

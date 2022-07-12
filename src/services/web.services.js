@@ -55,7 +55,6 @@ const enviarPedido = async (req, res, next) => {
                 <h2 style="color: blue;">Saludos administrador!</h2>`
         }
         await transporter.sendMail(mailOptions);
-        res.redirect("/");
     } catch (error) {
         next(error)
     }

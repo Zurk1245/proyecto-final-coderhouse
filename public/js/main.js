@@ -89,15 +89,13 @@ enviarSolicitudBtn.addEventListener("click", async () => {
 
     };
     
-    const mailRequest = await fetch(`${url}/productos/pedido`, {
+    await fetch(`${url}/productos/pedido`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(mailRequestBody)
     });
-    await mailRequest.json();
-    return;
 });
 
 vaciarBtn.addEventListener("click", () => {
