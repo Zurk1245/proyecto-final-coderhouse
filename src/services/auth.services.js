@@ -90,11 +90,10 @@ passport.use("registro", new LocalStrategy({passReqToCallback: true}, async (req
     }
 }));
 
-
-
 passport.serializeUser((user, done) => {
     done(null, user._id);
 });
+
 passport.deserializeUser(async (id, done) => {
     try {
         const usuario = await UsuarioModel.findById(id);

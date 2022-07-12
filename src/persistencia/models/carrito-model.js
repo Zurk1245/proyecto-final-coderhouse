@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const ProductoModel = require('./producto-model');
 
 const carritoSchema = new Schema({
     timestamp: {
@@ -7,7 +6,6 @@ const carritoSchema = new Schema({
         required: true
     },
     productos: {
-        // type: [ProductoModel]
         type: Array
     }
 

@@ -1,4 +1,3 @@
-const logger = require("../config/winston-logger");
 const productosDao = require("../persistencia/daos/productos/productos-dao-mongodb");
 
 const addProductToCatalog = async (req, res, next) => {

@@ -11,23 +11,18 @@ const usuarioSchema = new Schema({
         },
         nombre: {
             type: String,
-            //required: true
         },
         direccion: {
             type: String,
-            //required: true
         },
         edad: {
-            type: String,
-            //required: true
+            type: Number,
         },
         telefono: {
-            type: String,
-            //required: true
+            type: Number,
         },
         foto: {
             type: String,
-            //required: true
         }
 });
 
